@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* カラーパレット — 「インテリ × ポップ」 */
+  --color-background: #FAFAF9;
+  --color-surface: #FFFFFF;
+  --color-border: #E7E5E4;
+
+  --color-text: #1C1917;
+  --color-text-sub: #78716C;
+
+  --color-primary: #6366F1;
+  --color-primary-hover: #4F46E5;
+  --color-primary-light: #EEF2FF;
+
+  --color-secondary: #F59E0B;
+  --color-secondary-hover: #D97706;
+  --color-secondary-light: #FFFBEB;
+
+  --color-success: #10B981;
+  --color-success-light: #ECFDF5;
+  --color-warning: #EF4444;
+  --color-warning-light: #FEF2F2;
+
+  /* カテゴリバッジカラー */
+  --color-category-web: #3B82F6;
+  --color-category-api: #10B981;
+  --color-category-infra: #8B5CF6;
+  --color-category-data: #F59E0B;
+  --color-category-mobile: #EC4899;
+
+  /* フォント */
+  --font-sans: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+    system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+
+  /* アニメーション */
+  --animate-fade-in: fade-in 0.4s ease-out;
+  --animate-slide-up: slide-up 0.4s ease-out;
+  --animate-count-up: count-up 1.2s ease-out;
+}
+
+/* Keyframes */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes count-up {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Base styles */
+body {
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

@@ -54,7 +54,7 @@ export default function HomePage() {
         <Card className="border-primary/20 bg-primary-light/30">
           <CardHeader className="pb-3">
             <CardDescription className="text-primary font-medium">
-              VPoP からのメッセージ
+              カリスマEMからのメッセージ
             </CardDescription>
           </CardHeader>
           <CardContent>

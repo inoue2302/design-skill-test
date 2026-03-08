@@ -1,6 +1,8 @@
 "use client";
 
+import { useRef, useState, useCallback } from "react";
 import { match } from "ts-pattern";
+import html2canvas from "html2canvas-pro";
 import {
   Card,
   CardContent,
@@ -16,7 +18,12 @@ import {
   AlertCircle,
   Lightbulb,
   RotateCcw,
+  Copy,
+  Check,
+  Share2,
+  Download,
 } from "lucide-react";
+import { ShareCard } from "@/components/ShareCard";
 import type { EvaluationResult, EvaluationRank } from "@/types";
 
 type ResultCardProps = {
@@ -50,9 +57,104 @@ function getScoreColor(score: number): string {
   return "bg-text-sub";
 }
 
+function buildShareText(result: EvaluationResult): string {
+  return `【設計力テスト結果】
+スコア: ${result.totalScore}/100
+ランク: ${result.rank}
+
+技術選定力: ${result.scores.stackSelection}
+設計力: ${result.scores.architecture}
+データ設計: ${result.scores.dataDesign}
+非機能要件: ${result.scores.nonFunctional}
+運用・コスト: ${result.scores.operationCost}
+
+#設計力テスト`;
+}
+
 export function ResultCard({ result, onRetry }: ResultCardProps) {
+  const shareCardRef = useRef<HTMLDivElement>(null);
+  const [copied, setCopied] = useState(false);
+  const [generating, setGenerating] = useState(false);
+
+  const handleCopy = useCallback(async () => {
+    const text = buildShareText(result);
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }, [result]);
+
+  const generateImage = useCallback(async (): Promise<HTMLCanvasElement | null> => {
+    if (!shareCardRef.current) return null;
+    setGenerating(true);
+    try {
+      const canvas = await html2canvas(shareCardRef.current, {
+        scale: 2,
+        backgroundColor: null,
+        useCORS: true,
+      });
+      return canvas;
+    } finally {
+      setGenerating(false);
+    }
+  }, []);
+
+  const handleDownloadImage = useCallback(async () => {
+    const canvas = await generateImage();
+    if (!canvas) return;
+    const link = document.createElement("a");
+    link.download = `設計力テスト_${result.totalScore}点_${result.rank}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  }, [generateImage, result]);
+
+  const handleShareX = useCallback(async () => {
+    // 画像をダウンロード
+    const canvas = await generateImage();
+    if (canvas) {
+      const link = document.createElement("a");
+      link.download = `設計力テスト_${result.totalScore}点.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    }
+
+    // 少し待ってからX投稿画面を開く
+    setTimeout(() => {
+      const text = `設計力テスト結果: ${result.totalScore}点（${result.rank}）\n\nダウンロードした画像を添付してね！\n\n#設計力テスト`;
+      const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+      window.open(url, "_blank", "noopener,noreferrer");
+    }, 500);
+  }, [result, generateImage]);
+
+  const handleNativeShare = useCallback(async () => {
+    const canvas = await generateImage();
+    if (!canvas) return;
+
+    canvas.toBlob(async (blob) => {
+      if (!blob) return;
+      const file = new File([blob], "設計力テスト結果.png", { type: "image/png" });
+      const shareData: ShareData = {
+        title: "設計力テスト結果",
+        text: buildShareText(result),
+        files: [file],
+      };
+
+      if (navigator.canShare?.(shareData)) {
+        await navigator.share(shareData);
+      } else {
+        const textOnly: ShareData = {
+          title: "設計力テスト結果",
+          text: buildShareText(result),
+        };
+        await navigator.share(textOnly);
+      }
+    }, "image/png");
+  }, [generateImage, result]);
+
   return (
     <div className="space-y-6 animate-fade-in">
+      {/* 画像生成用の非表示カード */}
+      <ShareCard ref={shareCardRef} result={result} />
+
       {/* スコアヘッダー */}
       <Card className="text-center">
         <CardHeader>
@@ -68,6 +170,54 @@ export function ResultCard({ result, onRetry }: ResultCardProps) {
           </CardTitle>
         </CardHeader>
       </Card>
+
+      {/* 共有ボタン */}
+      <div className="flex flex-wrap justify-center gap-2">
+        <Button
+          onClick={handleCopy}
+          variant="outline"
+          size="sm"
+          className="gap-1.5"
+        >
+          {copied ? (
+            <Check className="size-4 text-success" />
+          ) : (
+            <Copy className="size-4" />
+          )}
+          {copied ? "コピーしました" : "結果をコピー"}
+        </Button>
+        <Button
+          onClick={handleDownloadImage}
+          variant="outline"
+          size="sm"
+          className="gap-1.5"
+          disabled={generating}
+        >
+          <Download className="size-4" />
+          画像を保存
+        </Button>
+        <Button
+          onClick={handleShareX}
+          variant="outline"
+          size="sm"
+          className="gap-1.5"
+          disabled={generating}
+        >
+          𝕏 画像付きポスト
+        </Button>
+        {typeof navigator !== "undefined" && "share" in navigator && (
+          <Button
+            onClick={handleNativeShare}
+            variant="outline"
+            size="sm"
+            className="gap-1.5"
+            disabled={generating}
+          >
+            <Share2 className="size-4" />
+            共有
+          </Button>
+        )}
+      </div>
 
       {/* 5軸スコア */}
       <Card>

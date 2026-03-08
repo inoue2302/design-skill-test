@@ -1,0 +1,119 @@
+[
+  {
+    "id": "constraint-001",
+    "teamSize": "エンジニア2人",
+    "company": "スタートアップ（シード期）",
+    "deadline": "2週間",
+    "budget": "月5万円以内"
+  },
+  {
+    "id": "constraint-002",
+    "teamSize": "エンジニア10人チーム",
+    "company": "大企業（エンタープライズ）",
+    "deadline": "半年",
+    "budget": "潤沢（月100万円以上）",
+    "extra": "セキュリティ審査あり"
+  },
+  {
+    "id": "constraint-003",
+    "teamSize": "エンジニア3人",
+    "company": "受託開発会社",
+    "deadline": "1ヶ月",
+    "budget": "固定予算（200万円）",
+    "extra": "レガシーシステム連携必須"
+  },
+  {
+    "id": "constraint-004",
+    "teamSize": "1人（個人開発）",
+    "company": "個人開発",
+    "deadline": "期限なし",
+    "budget": "無料枠のみ"
+  },
+  {
+    "id": "constraint-005",
+    "teamSize": "エンジニア5人",
+    "company": "メガベンチャー",
+    "deadline": "3ヶ月",
+    "budget": "中規模（月30万円）",
+    "extra": "マイクロサービス前提"
+  },
+  {
+    "id": "constraint-006",
+    "teamSize": "エンジニア4人",
+    "company": "スタートアップ（シリーズA）",
+    "deadline": "1ヶ月",
+    "budget": "月10万円以内",
+    "extra": "既存のRailsモノリスあり"
+  },
+  {
+    "id": "constraint-007",
+    "teamSize": "エンジニア8人",
+    "company": "SaaS企業（グロース期）",
+    "deadline": "2ヶ月",
+    "budget": "中規模（月50万円）",
+    "extra": "既存ユーザー10万人"
+  },
+  {
+    "id": "constraint-008",
+    "teamSize": "エンジニア2人 + 業務委託1人",
+    "company": "スタートアップ（シリーズB）",
+    "deadline": "6週間",
+    "budget": "月20万円",
+    "extra": "AWS環境構築済み"
+  },
+  {
+    "id": "constraint-009",
+    "teamSize": "エンジニア15人",
+    "company": "大企業（金融系）",
+    "deadline": "1年",
+    "budget": "潤沢",
+    "extra": "コンプライアンス要件厳格"
+  },
+  {
+    "id": "constraint-010",
+    "teamSize": "エンジニア3人",
+    "company": "NPO / 社会起業",
+    "deadline": "2ヶ月",
+    "budget": "月3万円以内",
+    "extra": "ボランティアメンバー含む"
+  },
+  {
+    "id": "constraint-011",
+    "teamSize": "エンジニア6人",
+    "company": "ゲーム会社",
+    "deadline": "4ヶ月",
+    "budget": "中規模（月40万円）",
+    "extra": "リアルタイム性が重要"
+  },
+  {
+    "id": "constraint-012",
+    "teamSize": "エンジニア1人 + デザイナー1人",
+    "company": "フリーランスチーム",
+    "deadline": "3週間",
+    "budget": "月5万円以内"
+  },
+  {
+    "id": "constraint-013",
+    "teamSize": "エンジニア20人",
+    "company": "大企業（製造業DX部門）",
+    "deadline": "半年",
+    "budget": "潤沢",
+    "extra": "オンプレ環境からクラウド移行中"
+  },
+  {
+    "id": "constraint-014",
+    "teamSize": "エンジニア3人",
+    "company": "EdTechスタートアップ",
+    "deadline": "2ヶ月",
+    "budget": "月15万円",
+    "extra": "生徒数急増中（月次30%成長）"
+  },
+  {
+    "id": "constraint-015",
+    "teamSize": "エンジニア7人",
+    "company": "ヘルスケア企業",
+    "deadline": "3ヶ月",
+    "budget": "中規模（月35万円）",
+    "extra": "個人情報保護法対応必須"
+  }
+]
